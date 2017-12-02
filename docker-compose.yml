@@ -1,0 +1,35 @@
+---
+version: '3.3'
+networks:
+  game:
+    driver: bridge
+
+services:
+  api:
+    container_name: kalaxia_api
+    image: kalaxia/api
+    networks:
+      - game
+
+  nginx:
+    container_name: kalaxia_nginx
+    build: nginx
+    networks:
+        - game
+    depends_on:
+        - api
+    env_file:
+        - kalaxia.env
+    extra_hosts:
+        - "local.kalaxia.com:127.0.0.1"
+    volumes:
+        - "./volumes/app:/srv/app"
+        # nginx
+        - "./volumes/ssl:/etc/ssl"
+        - "./volumes/html:/usr/share/nginx/html"
+        - "./volumes/logs/nginx:/var/log/nginx"
+    networks:
+        - game
+    ports:
+        - "4430:443"
+        - "8000:80"
