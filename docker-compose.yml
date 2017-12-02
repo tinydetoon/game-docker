@@ -10,6 +10,8 @@ services:
     image: kalaxia/api
     networks:
       - game
+    volumes:
+      - "./volumes/rsa_vault:/go/src/kalaxia-game-api/rsa_vault"
 
   nginx:
     container_name: kalaxia_nginx
