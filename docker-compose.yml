@@ -33,5 +33,5 @@ services:
     networks:
         - game
     ports:
-        - "4430:443"
-        - "8000:80"
+        - "${NGINX_HTTPS_PORT}:443"
+        - "${NGINX_PORT}:80"
