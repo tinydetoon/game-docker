@@ -8,6 +8,8 @@ services:
   api:
     container_name: kalaxia_api
     image: kalaxia/api
+    env_file:
+      - kalaxia.env
     networks:
       - game
     volumes:
@@ -35,3 +37,23 @@ services:
     ports:
         - "${NGINX_HTTPS_PORT}:443"
         - "${NGINX_PORT}:80"
+
+  postgresql:
+    container_name: kalaxia_postgresql
+    image: postgres:9.6
+    env_file:
+      - kalaxia.env
+    networks:
+      - game
+    ports:
+      - "5432"
+
+  phpgpadmin:
+    container_name: kalaxia_phpgpadmin
+    image: zhajor/docker-phppgadmin
+    env_file:
+      - kalaxia.env
+    networks:
+      - game
+    ports:
+      - "9090:80"
